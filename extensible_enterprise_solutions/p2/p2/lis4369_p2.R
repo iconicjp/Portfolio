@@ -1,0 +1,112 @@
+rm(list =ls(envir = globalenv()), envir = globalenv()); if(!is.null(dev.list())) dev.off(); gc(); cat("\014")
+
+setwd('C:/Users/Jemoo/repos/lis4369/p2/p2')
+
+
+url = "http://vincentarelbundock.github.io/Rdatasets/csv/datasets/mtcars.csv"
+mtcars <- read.csv(file=url, head=TRUE, sep=",")
+
+sink("lis4369_p2_output.txt")
+# 1) Display all data from file:
+cat("1) Display all data from file:", sep='\n')
+mtcars
+
+# 2) Display 1st 10 records:
+cat("\n2) Display 1st 10 records:", sep='\n')
+head(mtcars, 10)
+
+# 3) Display last 10 records:
+cat("\n3) Display last 10 records:", sep='\n')
+tail(mtcars, 10)
+
+# 4) Display file structure (see notes above):
+cat("\n4) Display file structure (see notes above):", sep='\n')
+str(mtcars)
+
+# 5) Display column names (see notes above):
+cat("\n5) Display column names (see notes above):", sep='\n')
+names(mtcars)
+
+# 6) Display 1st record/row with column names (see notes above):
+cat("\n6) Display 1st record/row with column names (see notes above):", sep='\n')
+mtcars[1,]
+
+# 7) Display 2nd column data (mpg), using column number:
+cat("\n7) Display 2nd column data (mpg), using column number:", sep='\n')
+mtcars[,1]
+
+# 8) Display column data (cyl), using column name:
+cat("\n8) Display column data (cyl), using column name:", sep='\n')
+mtcars$cyl
+
+# 9) Display row/column data (3,4), that is, one field, using square bracket notation:
+cat("\n9) Display row/column data (3,4), that is, one field, using square bracket notation:", sep='\n')
+mtcars[3,4]
+
+# 10) Display all data for cars having greater than 4 cylinders:
+cat("\n10) Display all data for cars having greater than 4 cylinders:", sep='\n')
+subset(mtcars, cyl > 4)
+
+# 11) Display all cars having more than 4 cylinders *and* greater than 5 gears:
+cat("\n11) Display all cars having more than 4 cylinders *and* greater than 5 gears:", sep='\n')
+subset(mtcars, cyl > 4 & gear >= 5)
+
+# 12) Display all cars having more than 4 cylinders *and* exactly 4 gears:
+cat("\n12) Display all cars having more than 4 cylinders *and* exactly 4 gears:", sep='\n')
+subset(mtcars, cyl > 4 & gear == 4)
+
+# 13) Display all cars having more than 4 cylinders *or* exactly 4 gears:
+cat("\n13) Display all cars having more than 4 cylinders *or* exactly 4 gears:", sep='\n')
+subset(mtcars, cyl > 4 | gear == 4)
+
+# 14) Display all cars having more than 4 cylinders that do *not* have 4 gears:
+cat("\n14) Display all cars having more than 4 cylinders that do *not* have 4 gears:", sep='\n')
+subset(mtcars, cyl > 4 & gear != 4)
+
+# 15) Display total number of rows (only the number):
+cat("\n15) Display total number of rows (only the number):", sep='\n')
+nrow(mtcars)
+
+# 16) Display total number of columns (only the number):
+cat("\n16) Display total number of columns (only the number):", sep='\n')
+ncol(mtcars)
+
+# 17) Display total number of dimensions (i.e., rows and columns):
+cat("\n17) Display total number of dimensions (i.e., rows and columns):", sep='\n')
+dim(mtcars)
+
+# 18) Display data frame structure - same as info in Python:
+cat("\n18) Display data frame structure - same as info in Python:", sep='\n')
+str(mtcars)
+
+# 19) Get mean, median, minimum, maximum, quantiles, variance, and standard deviation of horsepower:
+#Note: Remove missing values
+cat("\n19) Get mean, median, minimum, maximum, quantiles, variance, and standard deviation of horsepower:", sep='\n')
+cat("#Note: Remove missing values", sep='\n')
+cat("a. Mean: ")
+mean(mtcars$hp, na.rm=TRUE)
+cat("b. Median: ")
+median(mtcars$hp, na.rm=TRUE)
+cat("c. Min: ")
+min(mtcars$hp, na.rm=TRUE)
+cat("d. Max: ")
+max(mtcars$hp, na.rm=TRUE)
+cat("e. Quantile: ")
+quantile(mtcars$hp, na.rm=TRUE)
+cat("f. Variance: ")
+var(mtcars$hp, na.rm=TRUE)
+cat("g. Standard Deviation: ")
+sd(mtcars$hp, na.rm=TRUE)
+
+# 20) summary() prints min, max, mean, median, and quantiles (also, number of NA's, if any.):
+cat("\n20) summary() prints min, max, mean, median, and quantiles (also, number of NA's, if any.):", sep='\n')
+summary(mtcars$hp) # still need NA values in summary
+
+sink()
+# plots
+install.packages("ggplot2")
+library(ggplot2)
+
+qplot(mtcars$mpg, mtcars$wt, main= "Jevon Price", xlab= "mpg", ylab= "weight (x1000)")
+plot(mtcars$hp, mtcars$disp, xlab= "Horsepower", ylab= "Displacement", main= "Jevon Price")
+save.image()

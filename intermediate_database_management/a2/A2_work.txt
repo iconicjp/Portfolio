@@ -1,0 +1,120 @@
+select per_fname, per_lname, concat(per_street, ' ' , per_city, ' ' , per_state, ' ' , per_zip)as per_address, emp_salary, fac_start_date
+from person p, employee e, faculty f
+where p.per_id = e.per_id and e.per_id = f.per_id;
+
+select per_fname, per_lname, concat(per_street, ' ' , per_city, ' ' , per_state, ' ' , per_zip)as per_address, emp_salary, fac_start_date
+from person natural join employee natural join faculty;
+
+select per_fname, per_lname, concat(per_street, ' ' , per_city, ' ' , per_state, ' ' , per_zip)as per_address, emp_salary, fac_start_date
+from person join employee using (per_id) 
+join faculty using (per_id);
+
+select per_fname, per_lname, concat(per_street, ' ' , per_city, ' ' , per_state, ' ' , per_zip)as per_address, emp_salary, fac_start_date
+from person p join employee e on p.per_id = e.per_id
+join faculty f on e.per_id = f.per_id;
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+select concat(per_fname, ' ', per_lname) as per_name, per_gender, per_dob, deg_type, deg_area, deg_date
+from person p, alumnus a, degree d
+where p.per_id = a.per_id and a.per_id = d.per_id
+limit 10;
+
+select concat(per_fname, ' ', per_lname) as per_name, per_gender, per_dob, deg_type, deg_area, deg_date
+from person natural join alumnus natural join degree
+limit 10;
+
+select concat(per_fname, ' ', per_lname) as per_name, per_gender, per_dob, deg_type, deg_area, deg_date
+from person join alumnus using (per_id) 
+join degree using (per_id)
+limit 10;
+
+select concat(per_fname, ' ', per_lname) as per_name, per_gender, per_dob, deg_type, deg_area, deg_date
+from person p join alumnus a on p.per_id = a.per_id
+join degree d on a.per_id = d.per_id
+limit 10;
+
+-----------------------------------------------------------------------------------------------------------------------------------
+select concat(per_fname, ' ', per_lname) as per_name, stu_major, ugd_test, ugd_score, ugd_standing
+from person p, student s, undergrad u
+where p.per_id = s.per_id and s.per_id = u.per_id
+order by p.per_id desc
+limit 20;
+
+select concat(per_fname, ' ', per_lname) as per_name, stu_major, ugd_test, ugd_score, ugd_standing
+from person natural join employee natural join staff
+order by person.per_id desc
+limit 20;
+
+select concat(per_fname, ' ', per_lname) as per_name, stu_major, ugd_test, ugd_score, ugd_standing
+from person join student using (per_id) 
+join undergrad using (per_id)
+order by person.per_id desc
+limit 20;
+
+select concat(per_fname, ' ', per_lname) as per_name, stu_major, ugd_test, ugd_score, ugd_standing
+from person p join student s on p.per_id = e=s.per_id
+join undergrad u on s.per_id = u.per_id
+order by p.per_id desc
+limit 20;
+-----------------------------------------------------------------------------------------------------------------------------------
+select per_fname, per_lname, stf_position
+from person natural join employee natural join staff;
+
+delete from person where per_is_stf = 'y' limit 10;
+
+select per_fname, per_lname, stf_position
+from person p, employee e, staff s
+where p.per_id = a.per_id and a.per_id = d.per_id;
+
+select per_fname, per_lname, stf_position
+from person natural join employee natural join staff;
+
+select per_fname, per_lname, stf_position
+from person join employee using (per_id) 
+join staff using (per_id);
+
+select per_fname, per_lname, stf_position
+from person p join employee e on p.per_id = e.per_id
+join staff s on a.per_id = s.per_id;
+
+-----------------------------------------------------------------------------------------------------------------------------------
+select per_id, grd_score
+from person natural join student natural join grad
+limit 1;
+
+update grad
+set grd_score = grd_score * 1.1
+limit 1;
+
+select per_id, grd_score
+from person p, student s, grad g
+where p.per_id = s.per_id and s.per_id = g.per_id
+limit 1;
+
+select per_id, grd_score
+from person natural join student natural join grad
+limit 1;
+
+select per_id, grd_score
+from person join student using (per_id) 
+join grad using (per_id)
+limit 1;
+
+select per_id, grd_score
+from person p join student s on p.per_id = s.per_id
+join grad g on s.per_id = g.per_id
+limit 1;
+
+-----------------------------------------------------------------------------------------------------------------------------------
+select * from alumnus
+
+insert into alumnus 
+values(101,null),
+(102,null);
+
+insert into alumnus(per_id, alm_notes) 
+values(101,null),
+(102,null);
+
+select * from alumnus

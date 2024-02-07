@@ -1,0 +1,272 @@
+--1. List all the contents (rows or records) of the ORDERS table.
+
+mysql> select * from orders;
++--------------+------------+-----------------+
+| order_number | order_date | customer_number |
++--------------+------------+-----------------+
+| 12489        | 2002-09-02 | 124             |
+| 12491        | 2002-09-02 | 311             |
+| 12494        | 2002-09-04 | 315             |
+| 12495        | 2002-09-04 | 256             |
+| 12498        | 2002-09-05 | 522             |
+| 12500        | 2002-09-05 | 124             |
+| 12504        | 2002-09-05 | 522             |
++--------------+------------+-----------------+
+7 rows in set (0.00 sec)
+
+
+--2. Create an alias for an attribute name.
+
+mysql> select order_number as 'order #' from orders;
++---------+
+| order # |
++---------+
+| 12489   |
+| 12491   |
+| 12494   |
+| 12495   |
+| 12498   |
+| 12500   |
+| 12504   |
++---------+
+7 rows in set (0.00 sec)
+
+
+--3. List the order line number, part number, number ordered, and quoted price from the
+ORDER_LINE table in ascending order by quoted price.
+
+mysql> select * from order_line order by quoted_price asc;
++--------------+-------------+----------------+--------------+
+| order_number | part_number | number_ordered | quoted_price |
++--------------+-------------+----------------+--------------+
+| 12498        | AZ52        |              2 |        12.95 |
+| 12489        | AX12        |             11 |        21.95 |
+| 12495        | CX11        |              2 |        22.95 |
+| 12498        | BA74        |              4 |        24.95 |
+| 12491        | BT04        |              1 |       149.99 |
+| 12500        | BT04        |              1 |       149.99 |
+| 12494        | CB03        |              4 |       279.99 |
+| 12504        | CZ81        |              2 |       325.99 |
+| 12491        | BZ66        |              1 |       399.99 |
++--------------+-------------+----------------+--------------+
+9 rows in set (0.00 sec)
+
+
+--4. Remove part number CB03 from the PART table.
+
+mysql> select * from part;
++-------------+------------------+---------------+------------+-----------------                             -+------------+
+| part_number | part_description | units_on_hand | item_class | warehouse_number                              | unit_price |
++-------------+------------------+---------------+------------+-----------------                             -+------------+
+| AX12        | Iron             |           104 | HW         | 3                                             |      24.95 |
+| AZ52        | Dartboard        |            20 | SG         | 2                                             |      12.95 |
+| BA74        | Basketball       |            40 | SG         | 1                                             |      29.95 |
+| BH22        | Cornpopper       |            95 | HW         | 3                                             |      24.95 |
+| BT04        | Gas Grill        |            11 | AP         | 2                                             |     149.99 |
+| BZ66        | Washer           |            52 | AP         | 3                                             |     399.99 |
+| CA14        | Griddle          |            78 | HW         | 3                                             |      39.99 |
+| CB03        | Bike             |            44 | SG         | 1                                             |     299.99 |
+| CX11        | Blender          |           112 | HW         | 3                                             |      22.95 |
+| CZ81        | Treadmill        |            68 | SG         | 2                                             |     349.95 |
++-------------+------------------+---------------+------------+-----------------                             -+------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from part
+    -> where part_number = 'CB03';
+Query OK, 1 row affected (0.28 sec)
+
+mysql> select * from part;
++-------------+------------------+---------------+------------+------------------+------------+
+| part_number | part_description | units_on_hand | item_class | warehouse_number | unit_price |
++-------------+------------------+---------------+------------+------------------+------------+
+| AX12        | Iron             |           104 | HW         | 3                |      24.95 |
+| AZ52        | Dartboard        |            20 | SG         | 2                |      12.95 |
+| BA74        | Basketball       |            40 | SG         | 1                |      29.95 |
+| BH22        | Cornpopper       |            95 | HW         | 3                |      24.95 |
+| BT04        | Gas Grill        |            11 | AP         | 2                |     149.99 |
+| BZ66        | Washer           |            52 | AP         | 3                |     399.99 |
+| CA14        | Griddle          |            78 | HW         | 3                |      39.99 |
+| CX11        | Blender          |           112 | HW         | 3                |      22.95 |
+| CZ81        | Treadmill        |            68 | SG         | 2                |     349.95 |
++-------------+------------------+---------------+------------+------------------+------------+
+9 rows in set (0.00 sec)
+
+
+mysql> select * from part;
++-------------+------------------+---------------+------------+------------------+------------+
+| part_number | part_description | units_on_hand | item_class | warehouse_number | unit_price |
++-------------+------------------+---------------+------------+------------------+------------+
+| AX12        | Iron             |           104 | HW         | 3                |      24.95 |
+| AZ52        | Dartboard        |            20 | SG         | 2                |      12.95 |
+| BA74        | Basketball       |            40 | SG         | 1                |      29.95 |
+| BH22        | Cornpopper       |            95 | HW         | 3                |      24.95 |
+| BT04        | Gas Grill        |            11 | AP         | 2                |     149.99 |
+| BZ66        | Washer           |            52 | AP         | 3                |     399.99 |
+| CA14        | Griddle          |            78 | HW         | 3                |      39.99 |
+| CX11        | Blender          |           112 | HW         | 3                |      22.95 |
+| CZ81        | Treadmill        |            68 | SG         | 2                |     349.95 |
++-------------+------------------+---------------+------------+------------------+------------+
+9 rows in set (0.00 sec)
+
+
+--5. Modify the city, state, and zip code of sales rep number 06.
+
+mysql> select * from sales_rep;
++---------------+-------+---------+-------------+---------+-------+----------+------------------+------------                                                        -----+
+| slsrep_number | last  | first   | street      | city    | state | zip_code | total_commission | commission_                                                        rate |
++---------------+-------+---------+-------------+---------+-------+----------+------------------+------------                                                        -----+
+| 03            | Jones | Mary    | 123 Main    | Grant   | MI    | 49219    |          2150.00 |                                                                    0.05 |
+| 06            | Smith | William | 102 Raymond | Ada     | MI    | 49441    |          4912.50 |                                                                    0.07 |
+| 12            | Diaz  | Miguel  | 419 Harper  | Lansing | MI    | 49224    |          2150.00 |                                                                    0.05 |
++---------------+-------+---------+-------------+---------+-------+----------+------------------+------------                                                        -----+
+3 rows in set (0.00 sec)
+
+mysql> update sales_rep
+    -> set city= 'Tallahassee', state = 'FL', zip_code = '32304'
+    -> where slsrep_number = '06';
+Query OK, 1 row affected (0.38 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from sales_rep;
++---------------+-------+---------+-------------+-------------+-------+----------+------------------+-----------------+
+| slsrep_number | last  | first   | street      | city        | state | zip_code | total_commission | commission_rate |
++---------------+-------+---------+-------------+-------------+-------+----------+------------------+-----------------+
+| 03            | Jones | Mary    | 123 Main    | Grant       | MI    | 49219    |          2150.00 |            0.05 |
+| 06            | Smith | William | 102 Raymond | Tallahassee | FL    | 32304    |          4912.50 |            0.07 |
+| 12            | Diaz  | Miguel  | 419 Harper  | Lansing     | MI    | 49224    |          2150.00 |            0.05 |
++---------------+-------+---------+-------------+-------------+-------+----------+------------------+-----------------+
+3 rows in set (0.00 sec)
+
+
+--6. Add two records to the part table.
+
+mysql> select * from part;
++-------------+------------------+---------------+------------+------------------+------------+
+| part_number | part_description | units_on_hand | item_class | warehouse_number | unit_price |
++-------------+------------------+---------------+------------+------------------+------------+
+| AX12        | Iron             |           104 | HW         | 3                |      24.95 |
+| AZ52        | Dartboard        |            20 | SG         | 2                |      12.95 |
+| BA74        | Basketball       |            40 | SG         | 1                |      29.95 |
+| BH22        | Cornpopper       |            95 | HW         | 3                |      24.95 |
+| BT04        | Gas Grill        |            11 | AP         | 2                |     149.99 |
+| BZ66        | Washer           |            52 | AP         | 3                |     399.99 |
+| CA14        | Griddle          |            78 | HW         | 3                |      39.99 |
+| CX11        | Blender          |           112 | HW         | 3                |      22.95 |
+| CZ81        | Treadmill        |            68 | SG         | 2                |     349.95 |
++-------------+------------------+---------------+------------+------------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> insert into part
+    -> (part_number, part_description, units_on_hand, item_class, warehouse_number, unit_price)
+    -> values
+    -> ('yyyy', 'Widget1', '5', 'SS', 1, 9.95),
+    -> ('zzzz', 'Widget2', '10', 'TT', 2, 10.95);
+Query OK, 2 rows affected (0.22 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from part;
++-------------+------------------+---------------+------------+------------------+------------+
+| part_number | part_description | units_on_hand | item_class | warehouse_number | unit_price |
++-------------+------------------+---------------+------------+------------------+------------+
+| AX12        | Iron             |           104 | HW         | 3                |      24.95 |
+| AZ52        | Dartboard        |            20 | SG         | 2                |      12.95 |
+| BA74        | Basketball       |            40 | SG         | 1                |      29.95 |
+| BH22        | Cornpopper       |            95 | HW         | 3                |      24.95 |
+| BT04        | Gas Grill        |            11 | AP         | 2                |     149.99 |
+| BZ66        | Washer           |            52 | AP         | 3                |     399.99 |
+| CA14        | Griddle          |            78 | HW         | 3                |      39.99 |
+| CX11        | Blender          |           112 | HW         | 3                |      22.95 |
+| CZ81        | Treadmill        |            68 | SG         | 2                |     349.95 |
+| yyyy        | Widget1          |             5 | SS         | 1                |       9.95 |
+| zzzz        | Widget2          |            10 | TT         | 2                |      10.95 |
++-------------+------------------+---------------+------------+------------------+------------+
+11 rows in set (0.00 sec)
+
+
+_______________________________________________________________________________________________________________
+--7. List all dealership names, vehicle types and makes for each dealership (use EQUI-JOIN, aka "old-style" join).
+
+mysql> select dlr_name, veh_type, veh_make
+    -> from dealership d, vehicle v
+    -> where d.dlr_id = v.dlr_id;
++----------+----------+-----------+
+| dlr_name | veh_type | veh_make  |
++----------+----------+-----------+
+| Dealer1  | SUV      | Jeep      |
+| Dealer1  | SUV      | Toyota    |
+| Dealer2  | Auto     | Chevrolet |
+| Dealer2  | Truck    | GMC       |
+| Dealer3  | Van      | Chevrolet |
+| Dealer3  | Auto     | Dodge     |
+| Dealer4  | Auto     | Suburu    |
+| Dealer4  | Van      | Ford      |
+| Dealer5  | Auto     | Nissan    |
+| Dealer5  | Truck    | Ford      |
++----------+----------+-----------+
+10 rows in set (0.00 sec)
+
+
+--8. List all dealership names, as well as all sales reps first, last names, and their total sales for each dealership (use JOIN ON).
+ 
+mysql> select dlr_name, srp_fname, srp_lname, srp_tot_sales from dealership d join slsrep s  on d.dlr_id = s.dlr_id;
++----------+-----------+-----------+---------------+
+| dlr_name | srp_fname | srp_lname | srp_tot_sales |
++----------+-----------+-----------+---------------+
+| Dealer1  | Laura     | Callahan  |     876543.00 |
+| Dealer2  | Andrew    | Fuller    |     478678.00 |
+| Dealer3  | Nancy     | Davolio   |     256678.00 |
+| Dealer4  | Janet     | Leverling |     964678.00 |
+| Dealer5  | Margaret  | Peacock   |    1378345.00 |
++----------+-----------+-----------+---------------+
+5 rows in set (0.00 sec)
+
+
+--9. List how many vehicles each dealership owns (display dealer id, name, and *number* of vehicles for each dealership), use JOIN USING.
+
+mysql> select dlr_id, dlr_name, count(veh_type)
+    -> from dealership join vehicle
+    -> using (dlr_id)
+    -> group by dlr_id;
++--------+----------+-----------------+
+| dlr_id | dlr_name | count(veh_type) |
++--------+----------+-----------------+
+|      1 | Dealer1  |               2 |
+|      2 | Dealer2  |               2 |
+|      3 | Dealer3  |               2 |
+|      4 | Dealer4  |               2 |
+|      5 | Dealer5  |               2 |
++--------+----------+-----------------+
+5 rows in set (0.00 sec)
+
+
+--10. List each dealership's total sales, include dealer's name and total sales (captured in dealership_history table), use NATURAL JOIN.
+
+mysql> select dlr_name, sum(dhs_ytd_sales) as total_sales
+    -> from dealership
+    -> natural join dealership_history
+    -> group by dlr_id;
++----------+-------------+
+| dlr_name | total_sales |
++----------+-------------+
+| Dealer1  | 45345678.00 |
+| Dealer2  | 36871356.00 |
+| Dealer3  |  2345464.00 |
+| Dealer4  |  1878345.00 |
+| Dealer5  |  2202419.00 |
++----------+-------------+
+5 rows in set (0.00 sec)
+
+
+--11. List the average total sales for each sales rep in each dealership, include dealer ID, name, sales reps'' id, and first and last names, use NATURAL JOIN.
+
+mysql> select dlr_id, dlr_name, srp_id, srp_lname, srp_fname, avg(srp_tot_sales) from dealership natural join slsrep group by dlr_id, srp_id;
++--------+----------+--------+-----------+-----------+--------------------+
+| dlr_id | dlr_name | srp_id | srp_lname | srp_fname | avg(srp_tot_sales) |
++--------+----------+--------+-----------+-----------+--------------------+
+|      1 | Dealer1  |      5 | Callahan  | Laura     |      876543.000000 |
+|      2 | Dealer2  |      2 | Fuller    | Andrew    |      478678.000000 |
+|      3 | Dealer3  |      1 | Davolio   | Nancy     |      256678.000000 |
+|      4 | Dealer4  |      3 | Leverling | Janet     |      964678.000000 |
+|      5 | Dealer5  |      4 | Peacock   | Margaret  |     1378345.000000 |
++--------+----------+--------+-----------+-----------+--------------------+
+5 rows in set (0.00 sec)
