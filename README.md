@@ -7,7 +7,7 @@
 
 **Course Work Links:**
 
-1. My Resume is at the bottom. Click [here](resume/resume.pdf "My Resume") to download the PDF version
+1. My Resume is at the bottom. Click [here](Resume/resume.pdf "My Resume") to download the PDF version
 
 2. [LIS4369: Extensible Enterprise Solutions](extensible_enterprise_solutions/README.md)
     - This is a class focused on Python and R. Most of the work centered around learning these languages and using them to analyze data (Notably Jupyter Notebook and Pandas). I also learned Git and some Linux in this class.
@@ -22,4 +22,4 @@
 <br/>
 
 
-![Resume](resume/resume.png)
+![Resume](Resume/resume.png)
