@@ -7,7 +7,7 @@
 
 **Course Work Links:**
 
-1. Here is my [Resume](resume/resume.png "My Resume")
+1. My Resume is at the bottom. Click [here](resume/resume.pdf "My Resume") to download the PDF version
 
 2. [LIS4369: Extensible Enterprise Solutions](extensible_enterprise_solutions/README.md)
     - This is a class focused on Python and R. Most of the work centered around learning these languages and using them to analyze data (Notably Jupyter Notebook and Pandas). I also learned Git and some Linux in this class.
@@ -17,3 +17,9 @@
 
 4. [LIS3781: Advanced Database Management](advanced_database_management/README.md)
     - This class is focused on DMBS managment and Advanced SQL techniques. The class goes over MySQL, MS SQL Server, Oracle and MongoDB(NoSQL). (This class is currenty in progress)
+
+<br/>
+<br/>
+
+
+![Resume](resume/resume.png)
