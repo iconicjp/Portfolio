@@ -1,12 +1,13 @@
 > **NOTE:** This README.md file should be placed at the **root of each of your main directory.**
 
 # Jevon Price
+* Here is my [LinkedIn: https://www.linkedin.com/in/jevon-price/](https://www.linkedin.com/in/jevon-price/)
 
 ## This is a Repo demonstrating some of the projects I have completed in college.
 
 **Course Work Links:**
 
-1. Here is my [Resume](resume/Resume.pdf "My Resume")
+1. Here is my [Resume](resume/resume.png "My Resume")
 
 2. [LIS4369: Extensible Enterprise Solutions](extensible_enterprise_solutions/README.md)
     - This is a class focused on Python and R. Most of the work centered around learning these languages and using them to analyze data (Notably Jupyter Notebook and Pandas). I also learned Git and some Linux in this class.
