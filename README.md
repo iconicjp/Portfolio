@@ -18,6 +18,8 @@
 4. [LIS3781: Advanced Database Management](advanced_database_management/README.md)
     - This class is focused on DMBS managment and Advanced SQL techniques. The class goes over MySQL, MS SQL Server, Oracle and MongoDB(NoSQL). (This class is currenty in progress)
 
+5. [Stock Level Creator](stock_level_creator)
+    - This is a personal project of mine written in Python. It takes a watchlist and outputs a file with levels for each stock in that watchlist. 
 <br/>
 <br/>
 
