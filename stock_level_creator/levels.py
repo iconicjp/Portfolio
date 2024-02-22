@@ -63,24 +63,6 @@ def preferred_touches(ticker):
     return 4
 
 
-
-def find_duplicates(price_levels):
-    """
-    Returns price where the stocks open or close is perfectly touched twice
-    """
-    duplicates = []
-    length_of_pl = len(price_levels)
-    for x in range(length_of_pl):
-        r = x + 1
-        if r >= length_of_pl:
-            break
-        if price_levels[x] == price_levels[r]:
-            duplicates.append(price_levels[x])
-
-    duplicates = sorted(set(duplicates))
-    return duplicates
-
-
 def make_open_touches_list(stock_opens, stock_closes, stock_highs, stock_lows):
     """
     Returns list of touches corresponding to list of stock opens. This will be used to eliminate low touched values
@@ -135,6 +117,10 @@ def make_close_touches_list(stock_opens, stock_closes, stock_highs, stock_lows):
 #EDIT TO YOUR LIKING!!! I recommend 5 years back
 start = dt.datetime(2019, 1, 1)
 end = dt.datetime.now()  # current date and time
+time = dt.datetime.date(end)
+
+with open('stock_levels.txt', 'w') as outfile:
+    outfile.write(f"Report generated on {time}\n{'-' * 175}\n")
 
 ticker_list = []
 
@@ -151,15 +137,11 @@ for content in contents:
     content = content.split(':')[1]
     ticker_list.append(content)
 
-# print(contents)
-# print(ticker_list)
-n = 0
 for ticker in ticker_list:
     #can change interval to create daily, weekly, or other interval levels
     data = yf.download(ticker, start, end=end, interval='1wk')
     #unused columns
     data.drop(columns=['Adj Close', 'Volume'], inplace=True)
-    # print(data)
     stock_opens = data.loc[:, 'Open'].values
     stock_closes = data.loc[:, 'Close'].values
     stock_highs = data.loc[:, 'High'].values
@@ -170,46 +152,64 @@ for ticker in ticker_list:
     stock_highs = np.round(stock_highs, decimals=2)
     stock_lows = np.round(stock_lows, decimals=2)
 
-    length_of_data = len(stock_opens)
-    # print(stock_opens, "\n", length_of_data)
-
-    price_levels = []
-
-    number_of_touches_open = make_open_touches_list(
-        stock_opens, stock_closes, stock_highs, stock_lows)
-    number_of_touches_close = make_close_touches_list(
-        stock_opens, stock_closes, stock_highs, stock_lows)
-
-    for i in range(len(number_of_touches_open)):
-        if number_of_touches_open[i] >= preferred_touches(ticker):
-            price_levels.append(stock_opens[i])
-
-    for i in range(len(number_of_touches_close)):
-        if number_of_touches_close[i] >= preferred_touches(ticker):
-            price_levels.append(stock_closes[i])
-
-    #duplicates should have higher priority over non duplicated numbers
-    duplicates = find_duplicates(price_levels)
-
-    cleaned_price_levels = np.unique(price_levels)
-
+    #function variables
     threshold = preferred_threshold(ticker)
+    touches_required = preferred_touches(ticker)
+    
+    length_of_data = len(stock_opens)
 
-    cleaned_list = []
-    length_of_cpl = len(cleaned_price_levels)
-    y = 0
-    while y < length_of_cpl:
-        cleaned_list.append(cleaned_price_levels[y])
-        j = y + 1
-        # raises index until price is outside of threshold
-        while j < length_of_cpl and (cleaned_price_levels[y] * (1 + threshold)) > cleaned_price_levels[j]:
-            j += 1
-        y = j
+    number_of_touches_open = make_open_touches_list(stock_opens, stock_closes, stock_highs, stock_lows)
+    number_of_touches_close = make_close_touches_list(stock_opens, stock_closes, stock_highs, stock_lows)
 
-    #EDIT TO YOUR PREFERRED FILE NAME/ PATH!!!
+    stock_data_opens = np.empty([2,length_of_data])
+    stock_data_closes = np.empty([2,length_of_data])
+    
+    stock_data_opens[0] = number_of_touches_open
+    stock_data_closes[0] = number_of_touches_close
+    stock_data_opens[1] = stock_opens
+    stock_data_closes[1] = stock_closes
+
+    stock_data_all = np.concatenate((stock_data_opens, stock_data_closes), axis=1)
+
+    sda_sort = np.argsort(stock_data_all[1])
+    stock_data_sorted = stock_data_all[:,sda_sort]
+    
+    length_of_stock_data_sorted = len(stock_data_sorted[0])
+
+    sda_price_list = []
+    sda_touch_list = []
+
+    for i in range(length_of_stock_data_sorted):
+        if stock_data_sorted[0][i] >= touches_required:
+            sda_touch_list.append(stock_data_sorted[0][i])
+            sda_price_list.append(stock_data_sorted[1][i])
+    
+    cleaned_array = np.vstack((sda_touch_list, sda_price_list))
+
+    final_list = []
+
+    length_of_cleaned_array = len(cleaned_array[0])
+
+    max_touches = int(np.max(cleaned_array[0]))
+
+    for y in range(max_touches, touches_required - 1, -1):
+        for x in range(length_of_cleaned_array):
+            if cleaned_array[0][x] == y:
+                add_to_final = True
+                if final_list:
+                    for z in range(len(final_list)):
+                        if (final_list[z] * (1 - threshold)) <= cleaned_array[1][x] <= (final_list[z] * (1 + threshold)):
+                            add_to_final = False
+                            break
+                if add_to_final:
+                    final_list.append(cleaned_array[1][x])
+
+    final_list.sort()
+
+    #EDIT TO YOUR PREFERRED FILE NAME & PATH!!!
     #By default, the file will be in the same path as this .py file.
     with open('stock_levels.txt', 'a') as outfile:
-        outfile.write(f"\n{ticker}: threshold = {threshold * 100:.1%} | touches = placeholder:\nDuplicates:\n{duplicates}\nCleaned Array:\n{cleaned_list}\n")
+        outfile.write(f"{ticker}: threshold = {threshold:.1%} | touches = {touches_required}:\n{final_list}\n")
         outfile.write('-' * 175 + '\n')
 
 print(f"Done!!\nYour levels are in {dname}\\stock_levels.txt")

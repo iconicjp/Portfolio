@@ -16,7 +16,9 @@
 3. Edit all the touches_n lists to your liking or leave it as is. 
     * The lists should be look like: *touches_3 = ['AAPL', 'AMZN', 'BA']*
 
-4. In preferred_threshold(), edit short_list or add more lists to adjust your thresholds for certain stocks. *I found that .03 works for most stocks and .01 for indexes*
+4. In preferred_threshold(), edit short_list or add more lists to adjust your thresholds for certain stocks. 
+
+    * *I found that .03 works for most stocks and .01 for indexes*
 
 5. In preferred_touches(), uncomment the lines where there are a corresponding touches_n- *if you have any*.
 
@@ -24,12 +26,12 @@
 
 6. Edit the ***start*** and ***end*** variables to your desired timeframe
 
-7. If your watchlist is not named 'watchlist.txt' or in a different folder than the .py file, edit line 142.
+7. If your watchlist is not named 'watchlist.txt' or in a different folder than the .py file, edit line 128.
 
-8. If you want to change the name of the output file or put it in a different folder, edit line 211.
+8. If you want to change the name of the output file or put it in a different folder, edit line 122 & 211.
 
 9. Run the python file and your levels should be in the output file.
 
 #### Here is a sample output:
 
-![stock_levels](stock_levels.png)
+![stock_levels](sample_output.png)
