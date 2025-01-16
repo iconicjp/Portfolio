@@ -27,5 +27,4 @@
 ***Coming Soon***
 
 ### Resume
-[My Resume](Resume/resume.png) showcasing my skills.
-![Resume](Resume/resume.png)
+[My Resume](resume/resume.pdf) showcasing my skills.
