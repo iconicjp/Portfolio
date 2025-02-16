@@ -1,5 +1,3 @@
-
-
 # Stock Level Creator
 
 ## This code genrates levels for a stock. 
@@ -28,7 +26,7 @@
 
 7. If your watchlist is not named 'watchlist.txt' or in a different folder than the .py file, edit line 128.
 
-8. If you want to change the name of the output file or put it in a different folder, edit line 122 & 211.
+8. If you want to change the name of the output file or put it in a different folder, edit lines 122 & 211.
 
 9. Run the python file and your levels should be in the output file.
 

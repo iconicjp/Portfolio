@@ -20,11 +20,12 @@
 2. [LIS4761: Data Mining and Analytics](data_mining_and_analytics/README.md)
     - This class was centered around data mining and analytic techniques and tools. I primarily used Orange Data Mining with some Weka.
 
-6. [Stock Level Creator](stock_level_creator)
+3. [Stock Level Creator](stock_level_creator/README.md)
     - This is a personal project of mine written in Python. It takes a watchlist of stocks and outputs a file with levels for each stock in that watchlist. I then run another script to insert the levels on my TradingView chart.
 
-### Power BI / Tableau
-***Coming Soon***
+### Data Visualization
+1. [Power BI](PowerBI/README.md)
+    - These are projects I found on the web to help me learn and refresh my knowledge on Power BI.
 
 ### Resume
 [My Resume](Resume/resume.pdf) showcasing my skills.
